@@ -1,13 +1,11 @@
 <template>
-    <my-filter @on-search="fetchActors"></my-filter>
+    <my-filter @on-search="fetchActors" @on-species="fetchActors"></my-filter>
 
     <div class="container">
-        
         <characterCardList 
             :actors="actors"
         />
         <!-- Створюємо пагінацію -->
-        
 
         <div class="pagination">
             <span>Page {{ current }}  of {{ totalPages }}</span>
@@ -38,9 +36,10 @@
                 response: null, // оголосив зміну
                 fav: true,
                 searchQuery: '',
+                speciesActor: '',
                 defaultFilter: {
                     name: '',
-                    status: ''
+                    species: ''
                 }
             }
         },
@@ -53,19 +52,17 @@
                 this.linkPage = this.response.info.next
                 this.fetchActors(); 
             },
-            startSearch() {
-                this.actors = this.searchedActors;
-
-                console.log(this.actors)
+            changeFilter() {
+                this.fetchActors();
             },
 
-            // searchData по дефолту пистий обєкт якщо є зміни у фільтрі передаємо пропс з фільтра @on-search
-            async fetchActors(searchData = this.defaultFilter) {
+            // filterData по дефолту писти обєкт, якщо є зміни у фільтрі передаємо пропс з фільтра @on-search
+            async fetchActors(filterData = this.defaultFilter) {
                 try {
                     const response = await axios.get(this.linkPage, {
                         params: {
-                            name: searchData.name, 
-                            // status: this.limit 
+                            name: filterData.name, 
+                            species: filterData.species 
                         }
                     });
                     this.response = response.data //присвоїли значення змінної

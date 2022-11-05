@@ -1,6 +1,6 @@
 <template>
     <div v-if="actors.length > 0" class="row_acter"> 
-        <transition-group name="user-list">
+        <transition-group name="actor-list">
             <characterCard  
                 v-for="actor in actors" 
                 :actor = "actor"
@@ -32,5 +32,15 @@
         display: flex;
         flex-wrap: wrap;
         margin: 0 -10px;
+    }
+
+    .actor-list-enter-active,
+    .actor-list-leave-active {
+    transition: all 0.3s ease;
+    }
+    .actor-list-enter-from,
+    .actor-list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
     }
 </style>

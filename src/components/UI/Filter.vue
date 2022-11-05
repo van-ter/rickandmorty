@@ -3,7 +3,39 @@
         <div class="container">
             <div class="row_filter">
                 <div class="col_filter">
-                    <span>qwe</span>
+                    <label>
+                        <input 
+                            type="radio" 
+                            value="" 
+                            v-model="speciesActor" 
+                            @change="changeFilter" 
+                        />
+                        <span>All</span>
+                    </label>
+                    <label>
+                        <input 
+                            type="radio" 
+                            value="human" 
+                            v-model="speciesActor" 
+                            @change="changeFilter" />
+                        <span>Humen</span>
+                    </label>
+                    <label>
+                        <input 
+                            type="radio" 
+                            value="animal" 
+                            v-model="speciesActor" 
+                            @change="changeFilter" />
+                        <span>Animal</span>
+                    </label>
+                    <label>
+                        <input 
+                            type="radio" 
+                            value="alien" 
+                            v-model="speciesActor" 
+                            @change="changeFilter" />
+                        <span>Alien</span>
+                    </label>
                 </div>
                 <div class="col_search">
                     <my-input
@@ -26,13 +58,18 @@
         data() {
             return {
                 // створюєм ключ із назвою актора який буде прописаний в інпуті
-                actorName: ''
+                actorName: '',
+                speciesActor: ''
             }
         }, 
         methods: {
             search() {
-                // $emit - прокидує івент на гору, перше це імя події а друге значення
-                this.$emit('onSearch', {name: this.actorName})
+                // $emit - прокидує івент на гору, перше це імя події(виклечимо в батька @on-search="fetchActors") а друге значення
+                this.$emit('onSearch', {name: this.actorName});
+            },
+            changeFilter() {
+                // $emit - прокидує івент на гору, перше це імя події(виклечимо в батька @on-species="fetchActors") а друге значення
+                this.$emit('onSpecies', {species: this.speciesActor})
             }
         }
     }
@@ -48,5 +85,30 @@
     }
     .col_search button.btn {
         margin-left: 10px;
+    }
+
+    .col_filter {
+        display: inline-flex;
+        border: 1px solid #0f2b46;
+        border-radius: 6px;
+        overflow: inherit;
+    }
+    .col_filter span {
+        display: inline-flex;
+        align-items: center;
+        height: 29px;
+        padding: 0 10px;
+        cursor: pointer;
+    }
+    .col_filter input {
+        display: none;
+    }
+    .col_filter label + label {
+        border-left: 1px solid #0f2b46;
+    }
+    .col_filter :checked+span {
+        background: #0f2b46;
+        color: #fff;
+        pointer-events: none;
     }
 </style>
