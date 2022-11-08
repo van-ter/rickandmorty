@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import App from './App.vue'
-import router from './router'
+import App from '@/App.vue'
+import router from '@/router'
+import store from '@/stores'
 
 import './assets/main.css'
 
@@ -16,5 +17,6 @@ components.forEach(component => {
 
 app.use(createPinia())
 app.use(router) //підключаємо всторонні модулі, бібліотеки
+app.use(store) //підключаємо всторонні модулі, бібліотеки
 
 app.mount('#app')

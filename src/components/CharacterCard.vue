@@ -3,45 +3,51 @@
         <RouterLink :to="{ path: `actor/${actor.id}`}" class="characterCard_img">
             <img :src="actor.image" :alt="actor.name">
         </RouterLink>
-        <!-- <div @click="$router.push(`/actor/${actor.id}`)" class="characterCard_img">
-            <img :src="actor.image" :alt="actor.name">
-        </div> -->
         <div class="characterCard_info">
             <div class="characterCard_info-name">{{ actor.name }}</div>
             <div class="characterCard_info-status">{{ actor.species }} - {{ actor.status }}</div>
-            <my-button 
-                @click="changeFav"
+            <my-button
+                v-if="isActorFavorite"
+                @click.prevent="removeActorFromFavorite(actor)"
             >
-                <span v-if="fav">Remove from Favourites</span>
-                <span v-else >Add to Favorites</span>
+                Remove from Favourites
             </my-button>
-
+            <my-button 
+                v-else 
+                @click="addFavorite"
+            >
+                Add to Favorites
+            </my-button>
         </div>
     </div>
 </template>
 <script>
+    // import router from '@/components/router';
+
     export default {
         props: {
             actor: {
                 type: Object,
                 required: true,
-                fav: true
-            },
-            fav: {
-                type: String // очікуємо тип з якоюсь назвою
             }
         },
         methods: {
-            changeFav(event) {
-                console.log(event);
+            addFavorite() {
+                this.$store.dispatch('addActorToFavorite', this.actor ); // створюєм назву і другий параметри сам актор
+
+                // localStorage.setItem('actors', JSON.stringify(this.actor))
+            },
+            removeActorFromFavorite(actor) {
+                this.$store.dispatch('removeActorFromFavorite', actor ) // створюєм назву і другий параметри сам актор
             }
         },
         mounted() {
         },
         computed: {
-            // linkActor() {
-            //     return `/actor/${this.actor.id}`
-            // }
+            isActorFavorite () {
+                // передаємо true false через гетер
+                return this.$store.getters['isActorFavorite'](this.actor)
+            } 
         }
     }
 </script>

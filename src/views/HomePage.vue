@@ -34,7 +34,6 @@
             return {
                 linkPage: "https://rickandmortyapi.com/api/character?page=1",
                 response: null, // оголосив зміну
-                fav: true,
                 searchQuery: '',
                 speciesActor: '',
                 defaultFilter: {

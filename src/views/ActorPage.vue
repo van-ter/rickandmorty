@@ -17,11 +17,17 @@
                     </ul>
                 </div>
                 
-                <my-button 
-                    @click="changeFav"
+                <my-button
+                    v-if="actor.fav"
+                    @click.prevent="removeActorFromFavorite(actor)"
                 >
-                    <span v-if="fav">Remove from Favourites</span>
-                    <span v-else >Add to Favorites</span>
+                    Remove from Favourites
+                </my-button>
+                <my-button 
+                    v-else 
+                    @click="addFavorite"
+                >
+                    Add to Favorites
                 </my-button>
             </div>
             <div class="col_actor_img">
@@ -41,6 +47,17 @@
             }
         },
         methods: {
+            addFavorite() {
+                this.actor.fav = true;
+                this.$store.dispatch('addActorToFavorite', this.actor ); // створюєм назву і другий параметри сам актор
+
+                // localStorage.setItem('actors', JSON.stringify(this.actor))
+            },
+            removeActorFromFavorite(actor) {
+                this.actor.fav = false;
+                this.$store.dispatch('removeActorFromFavorite', actor ) // створюєм назву і другий параметри сам актор
+            },
+
             async fetchActor() {
                 try {
                     const response = await axios.get("https://rickandmortyapi.com/api/character/" + this.$route.params.id);
