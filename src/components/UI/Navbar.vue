@@ -3,7 +3,9 @@
         <div class="container">
             <div class="row_navbar">
                 <div class="col">
-                    <RouterLink to="/">Characters</RouterLink> <b>Favourites</b>
+                    <RouterLink to="/">Characters</RouterLink> 
+                    <b>Favourites</b>
+                    <RouterLink to="/todo/">Todo</RouterLink>
                 </div>
                 <div class="col">
                     <RouterLink to="/favorite"  class="favirite">
